@@ -21,13 +21,14 @@
 	</head>
 	<body id="container" class="container">
 
-        <p class="preTitle">Please guess a number</p>
+        <label for="guessedNumber" class="preTitle">Please guess a number</label>
         <input
-            type="text"
+            type="number"
             id="guessedNumber"
             class="inputGuessed"
             value=""
             placeholder="Enter a number"
+			min="0"
         />
 
         <button id="guessedNumberSubmit">Play</button>

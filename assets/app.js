@@ -13,15 +13,15 @@
 // 5. Do you want to exit, yes
 
 // Note: Prompt, Alert and Confirm is clocking the UI of the browser. Use carefully.
-let randomNumberLength = 100;
-let randomNumber = Math.floor(Math.random() * randomNumberLength);
-let guessed;
-let distanceBetweenRandomNumberAndGuessed;
-//let percent;
 let bodyContainer = document.getElementById("container");
 let input         = document.getElementById("guessedNumber");
 let button        = document.getElementById("guessedNumberSubmit");
 let printResponse = document.getElementById("printResponse");
+
+let randomNumberLength = 100;
+let randomNumber = Math.floor(Math.random() * (randomNumberLength + 1));
+let guessed;
+let distanceBetweenRandomNumberAndGuessed;
 
 let winPosition;
 let superHotPosition;
@@ -39,40 +39,41 @@ function startGame() {
 		console.log("guessed: " + guessed);
 		console.log("randomNumber: " + randomNumber);
 		console.log(
-			"randomNumber - guessed: " + distanceBetweenRandomNumberAndGuessed
+			"(randomNumber - guessed) ==> " + distanceBetweenRandomNumberAndGuessed
 		);
 		isGuessedNumberHotOrCold();
 	});
 }
 
-// If guessed number is <=10% of distance === HOT
-// If guessed number is <=5% of distance === SUPER HOT
-// If guesses number is >10% of distance === COLD
-// If guessed number is >=25% of distance === SUPER COLD
-// If guessed number is >= 60% of distance === FROZEN
 // If guessed number is === randomNumber === YOU WIN!
+// If guessed number is <= 5% of distance === SUPER HOT
+// If guessed number is <= 10% of distance === HOT
+// If guesses number is > 10% of distance === COLD
+// If guessed number is >= 30% of distance === SUPER COLD
+// If guessed number is >= 50% of distance === FROZEN
 
+/*
 function getPercentDistance(percentToGet) {
 	let percent = (percentToGet / 100) * randomNumberLength;
 
-	/*let winPosition       = (0 / 100) * randomNumberLength;
-            let superHotPosition  = (10 / 100) * randomNumberLength;
-            let hotPosition       = (20 / 100) * randomNumberLength;
-            let coldPosition      = (21 / 100) * randomNumberLength;
-            let superColdPosition = (50 / 100) * randomNumberLength;
-            let frozenPosition    = (90 / 100) * randomNumberLength;*/
+	let winPosition       = (0 / 100) * randomNumberLength;
+	let superHotPosition  = (5 / 100) * randomNumberLength;
+	let hotPosition       = (10 / 100) * randomNumberLength;
+	let coldPosition      = (10 / 100) * randomNumberLength;
+	let superColdPosition = (30 / 100) * randomNumberLength;
+	let frozenPosition    = (50 / 100) * randomNumberLength;
 }
+*/
 
 function isGuessedNumberHotOrCold() {
-	let winPosition = (0 / 100) * randomNumberLength;
-	let superHotPosition = (5 / 100) * randomNumberLength;
-	let hotPosition = (10 / 100) * randomNumberLength;
-	let coldPosition = (10 / 100) * randomNumberLength;
-	let superColdPosition = (50 / 100) * randomNumberLength;
-	let frozenPosition = (90 / 100) * randomNumberLength;
+	winPosition 	  = (0 / 100) * randomNumberLength;
+	superHotPosition  = (5 / 100) * randomNumberLength;
+	hotPosition 	  = (10 / 100) * randomNumberLength;
+	coldPosition 	  = (10 / 100) * randomNumberLength;
+	superColdPosition = (30 / 100) * randomNumberLength;
+	frozenPosition 	  = (50 / 100) * randomNumberLength;
 
-	
-    if (guessed.length == 0) {
+    if (guessed.length === 0) {
         printResponse.innerHTML = "Is empty!";
     } /*else if (guessed.length < randomNumberLength || guessed.length > randomNumberLength) {
         printResponse.innerHTML = "Out of range";
@@ -101,6 +102,7 @@ function isGuessedNumberHotOrCold() {
         bodyContainer.className = "";
         bodyContainer.classList.add("container-frozen");
 	}
+
 }
 
 startGame();
