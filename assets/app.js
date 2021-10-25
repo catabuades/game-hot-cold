@@ -2,17 +2,9 @@
  * Steps:
  * 1. I need to generate a random number.
  * 2. I need to ask player the guess a number.
- * 3. If number is bigger, answer is hot, if smaller, answer is cold.
+ * 3. If number is close, answer is hot, if far, answer is cold.
  */
 
-// Game States:
-// 1. game starts
-// 2. ask a guess
-// 3. If wrong or not exit, go to 2.
-// 4. Right guess, show you win
-// 5. Do you want to exit, yes
-
-// Note: Prompt, Alert and Confirm is clocking the UI of the browser. Use carefully.
 let bodyContainer = document.getElementById("container");
 let input         = document.getElementById("guessedNumber");
 let button        = document.getElementById("guessedNumberSubmit");
