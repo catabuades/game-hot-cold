@@ -1,100 +1,90 @@
-/*
- * Steps:
- * 1. I need to generate a random number.
- * 2. I need to ask player the guess a number.
- * 3. If number is close, answer is hot, if far, answer is cold.
- */
+/* bodyContainer used for change background color */
+let bodyContainer = document.getElementById("app-container");
 
-let bodyContainer = document.getElementById("container");
-let input         = document.getElementById("guessedNumber");
-let button        = document.getElementById("guessedNumberSubmit");
-let printResponse = document.getElementById("printResponse");
+/* input for get number for game, will be the lenght of the random number */
+let lengthInput   = document.getElementById("app-number-length");
+let controls      = document.getElementById("app-controls");
+let guessInput    = document.getElementById("app-number-guess");
+let gameButton    = document.getElementById("app-game-button");
+let result		  = document.getElementById("app-game-result");
 
-let randomNumberLength = 100;
-let randomNumber = Math.floor(Math.random() * (randomNumberLength + 1));
-let guessed;
-let distanceBetweenRandomNumberAndGuessed;
+let randomNumber;
+let isGameStarted = false;
+let isToReset = false;
 
-let winPosition;
-let superHotPosition;
-let hotPosition;
-let coldPosition;
-let superColdPosition;
-let frozenPosition;
+console.log('STARTER VALUES')
+console.log('gameLength... ==> ' + lengthInput.value)
+console.log('randomNumber... ==> ' + randomNumber)
+console.log('---------------------------------------')
+console.log(' ')
 
-function startGame() {
-	button.addEventListener("click", function (event) {
-		guessed = document.getElementById("guessedNumber").value;
-		distanceBetweenRandomNumberAndGuessed = Math.abs(
-			randomNumber - guessed
-		);
-		console.log("guessed: " + guessed);
-		console.log("randomNumber: " + randomNumber);
-		console.log(
-			"(randomNumber - guessed) ==> " + distanceBetweenRandomNumberAndGuessed
-		);
-		isGuessedNumberHotOrCold();
-	});
+function randomNumberGenerator() {
+	randomNumber = Math.floor(Math.random() * lengthInput.value + 1)
 }
 
-// If guessed number is === randomNumber === YOU WIN!
-// If guessed number is <= 5% of distance === SUPER HOT
-// If guessed number is <= 10% of distance === HOT
-// If guesses number is > 10% of distance === COLD
-// If guessed number is >= 30% of distance === SUPER COLD
-// If guessed number is >= 50% of distance === FROZEN
+function isColdOrHot() {
+	let gameLength = lengthInput.value;
+	let guessed = guessInput.value;
+	let distanceRandomGuessed = Math.abs(randomNumber - guessed);
 
-/*
-function getPercentDistance(percentToGet) {
-	let percent = (percentToGet / 100) * randomNumberLength;
+	//console.log('gameLength... ==> ' + gameLength)
+	//console.log('randomNumber... ==> ' + randomNumber)
 
-	let winPosition       = (0 / 100) * randomNumberLength;
-	let superHotPosition  = (5 / 100) * randomNumberLength;
-	let hotPosition       = (10 / 100) * randomNumberLength;
-	let coldPosition      = (10 / 100) * randomNumberLength;
-	let superColdPosition = (30 / 100) * randomNumberLength;
-	let frozenPosition    = (50 / 100) * randomNumberLength;
-}
-*/
+	let winPosition 	  = parseInt((0 / 100) * gameLength);
+	let superHotPosition  = parseInt((5 / 100) * gameLength);
+	let hotPosition 	  = parseInt((10 / 100) * gameLength);
+	let coldPosition 	  = parseInt((10 / 100) * gameLength);
+	let superColdPosition = parseInt((30 / 100) * gameLength);
+	let frozenPosition 	  = parseInt((50 / 100) * gameLength);
 
-function isGuessedNumberHotOrCold() {
-	winPosition 	  = (0 / 100) * randomNumberLength;
-	superHotPosition  = (5 / 100) * randomNumberLength;
-	hotPosition 	  = (10 / 100) * randomNumberLength;
-	coldPosition 	  = (10 / 100) * randomNumberLength;
-	superColdPosition = (30 / 100) * randomNumberLength;
-	frozenPosition 	  = (50 / 100) * randomNumberLength;
-
-    if (guessed.length === 0) {
-        printResponse.innerHTML = "Is empty!";
-    } /*else if (guessed.length < randomNumberLength || guessed.length > randomNumberLength) {
-        printResponse.innerHTML = "Out of range";
-    } */ else if (distanceBetweenRandomNumberAndGuessed === winPosition) {
-		printResponse.innerHTML = "You Win!!";
-        bodyContainer.className = "";
-        bodyContainer.classList.add("container-winner");
-	} else if (distanceBetweenRandomNumberAndGuessed <= superHotPosition) {
-		printResponse.innerHTML = "Super Hot";
-        bodyContainer.className = "";
-        bodyContainer.classList.add("container-super-hot");
-	} else if (distanceBetweenRandomNumberAndGuessed <= hotPosition) {
-		printResponse.innerHTML = "Hot";
-        bodyContainer.className = "";
-        bodyContainer.classList.add("container-hot");
-	} else if (distanceBetweenRandomNumberAndGuessed > coldPosition) {
-		printResponse.innerHTML = "Cold";
-        bodyContainer.className = "";
-        bodyContainer.classList.add("container-cold");
-	} else if (distanceBetweenRandomNumberAndGuessed >= superColdPosition) {
-		printResponse.innerHTML = "Super Cold";
-        bodyContainer.className = "";
-        bodyContainer.classList.add("container-super-cold");
-	} else if (distanceBetweenRandomNumberAndGuessed >= frozenPosition) {
-		printResponse.innerHTML = "Frozen";
-        bodyContainer.className = "";
-        bodyContainer.classList.add("container-frozen");
+	console.log('gameLength... --> ' + lengthInput.value)
+	console.log('randomNumber... --> ' + randomNumber)
+	console.log('guessed... --> ' + guessed)
+	console.log('distanceRandomGuessed... --> ' + distanceRandomGuessed)
+	console.log('..................................................')
+	console.log(' ')
+	console.log(' ')
+	
+	if (guessed == "") {
+		result.innerHTML = "Is empty!";
+	} 
+	
+	if (distanceRandomGuessed === winPosition) {
+		result.innerHTML = "You Win!";
+		gameButton.innerHTML = "Reset";
+		isToReset = true;
+	} else if (distanceRandomGuessed <= superHotPosition) {
+		result.innerHTML = "Super Hot";
+	} else if (distanceRandomGuessed <= hotPosition) {
+		result.innerHTML = "Hot";
+	} else if (distanceRandomGuessed > coldPosition) {
+		result.innerHTML = "Cold";
+	} else if (distanceRandomGuessed > superColdPosition) {
+		result.innerHTML = "Super Cold";
+	} else if (distanceRandomGuessed > frozenPosition) {
+		result.innerHTML = "Frozen"
 	}
-
 }
 
-startGame();
+gameButton.addEventListener("click", function (event) {
+	if (!lengthInput.value) {
+		result.innerHTML = "Enter a number"
+	} else if (!isGameStarted && lengthInput.value) {
+		isGameStarted = true;
+		controls.classList.toggle("hidden");
+		gameButton.innerHTML = "Guess";
+		result.innerHTML = ""
+		randomNumberGenerator()
+	} else if (isToReset) {
+		isGameStarted = false;
+		isToReset = false;
+		controls.classList.toggle("hidden");
+		gameButton.innerHTML = "Start Game";
+		result.innerHTML = "";
+		lengthInput.value = "";
+		guessInput.value = "";
+
+	} else {
+		isColdOrHot();
+	}
+})
