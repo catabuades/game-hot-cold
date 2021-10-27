@@ -37,6 +37,8 @@ function isColdOrHot() {
 	let superColdPosition = parseInt((30 / 100) * gameLength);
 	let frozenPosition 	  = parseInt((50 / 100) * gameLength);
 
+	let containerClass;
+
 	console.log('gameLength... --> ' + lengthInput.value)
 	console.log('randomNumber... --> ' + randomNumber)
 	console.log('guessed... --> ' + guessed)
@@ -53,17 +55,26 @@ function isColdOrHot() {
 		result.innerHTML = "You Win!";
 		gameButton.innerHTML = "Reset";
 		isToReset = true;
+		containerClass = "container-winner";
 	} else if (distanceRandomGuessed <= superHotPosition) {
 		result.innerHTML = "Super Hot";
+		containerClass = "container-super-hot";
 	} else if (distanceRandomGuessed <= hotPosition) {
 		result.innerHTML = "Hot";
+		containerClass = "container-hot";
 	} else if (distanceRandomGuessed > coldPosition) {
 		result.innerHTML = "Cold";
+		containerClass = "container-cold";
 	} else if (distanceRandomGuessed > superColdPosition) {
 		result.innerHTML = "Super Cold";
+		containerClass = "container-super-cold";
 	} else if (distanceRandomGuessed > frozenPosition) {
 		result.innerHTML = "Frozen"
+		containerClass = "container-frozen";
 	}
+
+	bodyContainer.className = "";
+	bodyContainer.classList.add(containerClass);
 }
 
 gameButton.addEventListener("click", function (event) {
