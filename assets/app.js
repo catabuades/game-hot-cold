@@ -47,10 +47,6 @@ function isColdOrHot() {
 	console.log(' ')
 	console.log(' ')
 	
-	if (guessed == "") {
-		result.innerHTML = "Is empty!";
-	} 
-	
 	if (distanceRandomGuessed === winPosition) {
 		result.innerHTML = "You Win!";
 		gameButton.innerHTML = "Reset";
@@ -80,7 +76,9 @@ function isColdOrHot() {
 gameButton.addEventListener("click", function (event) {
 	if (!lengthInput.value) {
 		result.innerHTML = "Enter a number"
-	} else if (!isGameStarted && lengthInput.value) {
+	} else if (lengthInput.value < 0 || lengthInput.value > 100) {
+		result.innerHTML = "From 0 to 100";
+	}else if (!isGameStarted && lengthInput.value) {
 		isGameStarted = true;
 		controls.classList.toggle("hidden");
 		gameButton.innerHTML = "Guess";
